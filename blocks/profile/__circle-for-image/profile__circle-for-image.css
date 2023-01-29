@@ -1,0 +1,14 @@
+.profile__circle-for-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 640px) {
+    .profile__circle-for-image {
+        margin-bottom: 26px;
+        margin-right: 0;
+    }
+}
