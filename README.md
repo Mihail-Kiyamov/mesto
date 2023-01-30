@@ -1,6 +1,6 @@
 # **Проект: Mesto**
 
-### Ссылка на проект https://mihail-kiyamov.github.io/yet-another-project/ ###
+### Ссылка на проект https://mihail-kiyamov.github.io/mesto/ ###
 
 ## **Цель сайта:**  
 Интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.
