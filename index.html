@@ -12,52 +12,50 @@
     <div class="page">
         <header class="header">
             <img class="header__logo" src="./images/logo.svg" alt="Лого Mesto">
-            <div class="header__line"></div>
         </header>
         <main class="content">
             <section class="profile">
                 <div class="profile__circle-for-image">
-                    <img class="profile__avatar" src="./images/Jacques Cousteau.jpg" alt="Жак-Ив Кусто">
+                    <img class="profile__avatar" src="./images/Jacques Cousteau.jpg" alt="Аватар пользователя">
                 </div>
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <input class="profile__edit-button" type="image" src="./images/Edit Button.svg"
-                        alt="Кнопка редактирования">
-                    <h2 class="profile__about">Исследователь океана</h2>
+                    <button class="profile__edit-button" type="button"></button>
+                    <p class="profile__about">Исследователь океана</p>
                 </div>
-                <button class="profile__add-button"></button>
+                <button class="profile__add-button" type="button"></button>
             </section>
             <section class="elements">
-                <div class="element">
+                <article class="element">
                     <img class="element__image" src="./images/fox.jpg" alt="Лиса">
-                    <p class="element__name">Лисичка в снегу</p>
-                    <button class="element__like-button"></button>
-                </div>
-                <div class="element">
+                    <h2 class="element__name">Лисичка в снегу</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
+                <article class="element">
                     <img class="element__image" src="./images/mushrooms.jpg" alt="Грибы">
-                    <p class="element__name">Корзина грибов</p>
-                    <button class="element__like-button"></button>
-                </div>
-                <div class="element">
+                    <h2 class="element__name">Корзина грибов</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
+                <article class="element">
                     <img class="element__image" src="./images/architecture.jpg" alt="Колоны с куполом">
-                    <p class="element__name">Купол</p>
-                    <button class="element__like-button"></button>
-                </div>
-                <div class="element">
+                    <h2 class="element__name">Купол</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
+                <article class="element">
                     <img class="element__image" src="./images/leaves.jpg" alt="Листья">
-                    <p class="element__name">Пёстрые листья</p>
-                    <button class="element__like-button"></button>
-                </div>
-                <div class="element">
+                    <h2 class="element__name">Пёстрые листья</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
+                <article class="element">
                     <img class="element__image" src="./images/3D_render_cubes.jpg" alt="3д кубы">
-                    <p class="element__name">Рендер</p>
-                    <button class="element__like-button"></button>
-                </div>
-                <div class="element">
+                    <h2 class="element__name">Рендер</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
+                <article class="element">
                     <img class="element__image" src="./images/sakura.jpg" alt="Деревья сакуры">
-                    <p class="element__name">Тропа сквозь сакуры</p>
-                    <button class="element__like-button"></button>
-                </div>
+                    <h2 class="element__name">Тропа сквозь сакуры</h2>
+                    <button class="element__like-button" type="button"></button>
+                </article>
             </section>
         </main>
         <footer class="footer">
@@ -66,11 +64,13 @@
     </div>
     <div class="popup">
         <div class="popup__container">
-            <p class="popup__title">Редактировать профиль</p>
-            <input class="popup__name" type="text">
-            <input class="popup__about" type="text">
-            <input class="popup__submit" type="submit" value="Сохранить">
-            <input class="popup__close" type="image" src="./images/Close Icon.svg" alt="Кнопка Закрыть">
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__submit-form" name="edit-profile-form">
+                <input class="popup__input popup__input_type_name" type="text" name="new-name">
+                <input class="popup__input popup__input_type_about" type="text" name="new-about">
+                <input class="popup__submit" type="submit" value="Сохранить">
+            </form>
+            <button class="popup__close" type="button"></button>
         </div>
     </div>
     <script src="./Jscripts/index.js"></script>
