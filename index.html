@@ -26,51 +26,50 @@
                 <button class="profile__add-button" type="button"></button>
             </section>
             <section class="elements">
-                <article class="element">
-                    <img class="element__image" src="./images/fox.jpg" alt="Лиса">
-                    <h2 class="element__name">Лисичка в снегу</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="./images/mushrooms.jpg" alt="Грибы">
-                    <h2 class="element__name">Корзина грибов</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="./images/architecture.jpg" alt="Колоны с куполом">
-                    <h2 class="element__name">Купол</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="./images/leaves.jpg" alt="Листья">
-                    <h2 class="element__name">Пёстрые листья</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="./images/3D_render_cubes.jpg" alt="3д кубы">
-                    <h2 class="element__name">Рендер</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="./images/sakura.jpg" alt="Деревья сакуры">
-                    <h2 class="element__name">Тропа сквозь сакуры</h2>
-                    <button class="element__like-button" type="button"></button>
-                </article>
+
             </section>
         </main>
         <footer class="footer">
             <p class="footer__author">© 2020 Mesto Russia</p>
         </footer>
+        <template id="element-template">
+            <article class="element">
+                <img class="element__image" src="" alt="">
+                <h2 class="element__name"></h2>
+                <button class="element__like-button" type="button"></button>
+                <button class="element__delete-button" type="button"></button>
+            </article>
+        </template>
     </div>
-    <div class="popup">
+    <div class="popup popup_type_edit-profile">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__submit-form" name="edit-profile-form">
+            <form class="popup__submit-form popup__submit-form_type_edit-profile" name="edit-profile-form">
                 <input class="popup__input popup__input_type_name" type="text" name="new-name">
                 <input class="popup__input popup__input_type_about" type="text" name="new-about">
-                <input class="popup__submit" type="submit" value="Сохранить">
+                <input class="popup__submit popup__submit_type_" type="submit" value="Сохранить">
             </form>
-            <button class="popup__close" type="button"></button>
+            <button class="popup__close popup__close_type_edit-profile" type="button"></button>
+        </div>
+    </div>
+    <div class="popup popup_type_add-element">
+        <div class="popup__container">
+            <h2 class="popup__title">Новое место</h2>
+            <form class="popup__submit-form popup__submit-form_type_add-element" name="add-element-form">
+                <input class="popup__input popup__input_type_mesto-name" type="text" placeholder="Название"
+                    name="new-mesto-name">
+                <input class="popup__input popup__input_type_mesto-src" type="text" placeholder="Ссылка на картинку"
+                    name="new-mesto-src">
+                <input class="popup__submit" type="submit" value="Создать">
+            </form>
+            <button class="popup__close popup__close_type_add-element" type="button"></button>
+        </div>
+    </div>
+    <div class="popup popup_type_show-image">
+        <div class="popup__image-container">
+            <img class="popup__image" src="" alt="">
+            <p class="popup__image-name"></p>
+            <button class="popup__close popup__close_type_show-image" type="button"></button>
         </div>
     </div>
     <script src="./Jscripts/index.js"></script>
