@@ -48,6 +48,17 @@ function openPopup(popup) {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  const inputsError = Array.from(popup.querySelectorAll('.popup__input-error'));
+
+  inputsError.forEach((input) => {
+    input.textContent = '';
+  });
+
+  const inputs = Array.from(popup.querySelectorAll('.popup__input'))
+
+  inputs.forEach((input) => {
+    input.classList.remove('popup__input_type_error');
+  })
 }
 
 //Изменение Данных Профиля
@@ -55,6 +66,7 @@ function openPopupProfileEdit() {
   openPopup(popupProfileEdit);
   newName.value = profileName.textContent;
   newAbout.value = profileAbout.textContent;
+
 };
 
 function closePopupProfileEdit() {
@@ -75,6 +87,8 @@ function openPopupAddElement() {
 
 function closePopupAddElement() {
   closePopup(popupAddElement);
+  newMestoName.value = '';
+  newMestoSrc.value = '';
 };
 
 function addNewElement(event) {
