@@ -22,7 +22,7 @@ function toggleButtonState(inputList, buttonElement, buttonClass) {
   if (hasInvalidInput(inputList)) {
     disableButton(buttonElement, buttonClass);
   } else {
-    enableButton(buttonElement, buttonClass);
+    enableButton(buttonElement, config);
   }
 };
 
@@ -32,17 +32,17 @@ function hasInvalidInput(inputList) {
   });
 };
 
-function enableButton(buttonElement, buttonClass) {
-  buttonElement.classList.remove(buttonClass);
+function enableButton(buttonElement, config) {
+  buttonElement.classList.remove(config.inactiveButtonClass);
   buttonElement.removeAttribute('disabled');
 };
 
-function disableButton(buttonElement, buttonClass) {
-  buttonElement.classList.add(buttonClass);
+function disableButton(buttonElement, config) {
+  buttonElement.classList.add(config.inactiveButtonClass);
   buttonElement.setAttribute('disabled', true);
 };
 
-function resetErrors(form) {
+function resetErrors(form, config) {
   const inputs = form.querySelectorAll(config.inputSelector);
   inputs.forEach(input => hideInputError(form, input, config.inputErrorClass));
 }

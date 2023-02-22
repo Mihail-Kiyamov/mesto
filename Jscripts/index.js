@@ -66,9 +66,7 @@ function openPopupProfileEdit() {
   newName.value = profileName.textContent;
   newAbout.value = profileAbout.textContent;
 
-  resetErrors(popupEditProfileSubmitForm);
-
-  document.addEventListener('keydown', closePopupByEscHandler)
+  resetErrors(popupEditProfileSubmitForm, config);
 };
 
 function closePopupProfileEdit() {
@@ -88,14 +86,14 @@ function openPopupAddElement() {
 
   popupAddElemetSubmitForm.reset();
 
-  resetErrors(popupAddElemetSubmitForm);  
+  resetErrors(popupAddElemetSubmitForm, config);
+
+  const submitButton = popupAddElemetSubmitForm.querySelector('.popup__submit')
+  disableButton(submitButton, config);
 };
 
 function closePopupAddElement() {
   closePopup(popupAddElement);
-
-  const submitButton = popupAddElemetSubmitForm.querySelector('.popup__submit')
-  disableButton(submitButton, config.inactiveButtonClass);
 };
 
 function addNewElement(event) {
