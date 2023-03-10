@@ -4,7 +4,6 @@ const newName = document.querySelector('.popup__input_type_name');
 const newAbout = document.querySelector('.popup__input_type_about');
 const popupProfileEdit = document.querySelector('.popup_type_edit-profile');
 const popupAddElement = document.querySelector('.popup_type_add-element');
-export const popupShowImage = document.querySelector('.popup_type_show-image');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addElementButton = document.querySelector('.profile__add-button');
 const popupEditProfileCloseButton = document.querySelector('.popup__close_type_edit-profile');
@@ -12,39 +11,31 @@ const popupAddElementCloseButton = document.querySelector('.popup__close_type_ad
 const popupShowImageCloseButton = document.querySelector('.popup__close_type_show-image');
 const popupEditProfileSubmitForm = document.querySelector('.popup__submit-form_type_edit-profile');
 const popupAddElemetSubmitForm = document.querySelector('.popup__submit-form_type_add-element');
+const popupEditProfileSubmitButton = popupEditProfileSubmitForm.querySelector('.popup__submit');
+const popupAddElemetSubmitButton = popupAddElemetSubmitForm.querySelector('.popup__submit');
 const elementsContainer = document.querySelector('.elements');
 const newMestoName = document.querySelector('.popup__input_type_mesto-name');
 const newMestoSrc = document.querySelector('.popup__input_type_mesto-src');
 
-import {config, FormValidator} from './validate.js';
-import {initialCards, Card} from './cards.js';
-
+import {config} from './constants.js';
+import {FormValidator} from './FormValidator.js';
+import {Card} from './Card.js';
+import {initialCards} from './constants.js';
+import {popupShowImage} from './utils/constants.js';
+import {openPopup, closePopup} from './utils/utils.js';
 
 function showInitialElements() {
   initialCards.forEach(function (item) {
-    const element = new Card(item.name, item.link, '#element-template');
+    const element = createCard(item.name, item.link, '#element-template');
 
     elementsContainer.append(element.generateCard());
   })
 };
 
-export function openPopup(popup) {
-  popup.classList.add('popup_opened');
-
-  document.addEventListener('keydown', closePopupByEscHandler);
-};
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-
-  document.removeEventListener('keydown', closePopupByEscHandler);
-};
-
-function closePopupByEscHandler(evt) {
-  if (evt.code === 'Escape') {
-    closePopup(document.querySelector('.popup_opened'));
-  };
-};
+function createCard(name, src, templateSelector) {
+  const element = new Card(name, src, templateSelector)
+  return element;
+}
 
 //Изменение Данных Профиля
 function openPopupProfileEdit() {
@@ -54,8 +45,7 @@ function openPopupProfileEdit() {
 
   profileEditFormValidator.resetErrors();
 
-  const submitButton = popupEditProfileSubmitForm.querySelector('.popup__submit');
-  profileEditFormValidator.enableButton(submitButton);
+  profileEditFormValidator.enableButton(popupEditProfileSubmitButton);
 };
 
 function closePopupProfileEdit() {
@@ -77,8 +67,7 @@ function openPopupAddElement() {
 
   addCardFormValidator.resetErrors();
 
-  const submitButton = popupAddElemetSubmitForm.querySelector('.popup__submit');
-  addCardFormValidator.disableButton(submitButton);
+  addCardFormValidator.disableButton(popupAddElemetSubmitButton);
 };
 
 function closePopupAddElement() {
@@ -88,7 +77,7 @@ function closePopupAddElement() {
 function addNewElement(event) {
   event.preventDefault();
 
-  const element = new Card(newMestoName.value, newMestoSrc.value, '#element-template');
+  const element = createCard(newMestoName.value, newMestoSrc.value, '#element-template');
 
   elementsContainer.prepend(element.generateCard());
 
@@ -101,6 +90,7 @@ function closePopupShowImage() {
 
 showInitialElements();
 
+//Создание валидации
 const profileEditFormValidator = new FormValidator(config, popupEditProfileSubmitForm);
 profileEditFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(config, popupAddElemetSubmitForm);
