@@ -1,3 +1,10 @@
+import {config} from './constants.js';
+import {FormValidator} from './FormValidator.js';
+import {Card} from './Card.js';
+import {initialCards} from './constants.js';
+import {popupShowImage} from './utils/constants.js';
+import {openPopup, closePopup} from './utils/utils.js';
+
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const newName = document.querySelector('.popup__input_type_name');
@@ -16,13 +23,6 @@ const popupAddElemetSubmitButton = popupAddElemetSubmitForm.querySelector('.popu
 const elementsContainer = document.querySelector('.elements');
 const newMestoName = document.querySelector('.popup__input_type_mesto-name');
 const newMestoSrc = document.querySelector('.popup__input_type_mesto-src');
-
-import {config} from './constants.js';
-import {FormValidator} from './FormValidator.js';
-import {Card} from './Card.js';
-import {initialCards} from './constants.js';
-import {popupShowImage} from './utils/constants.js';
-import {openPopup, closePopup} from './utils/utils.js';
 
 function showInitialElements() {
   initialCards.forEach(function (item) {
@@ -45,7 +45,7 @@ function openPopupProfileEdit() {
 
   profileEditFormValidator.resetErrors();
 
-  profileEditFormValidator.enableButton(popupEditProfileSubmitButton);
+  profileEditFormValidator.enableButton();
 };
 
 function closePopupProfileEdit() {
@@ -67,7 +67,7 @@ function openPopupAddElement() {
 
   addCardFormValidator.resetErrors();
 
-  addCardFormValidator.disableButton(popupAddElemetSubmitButton);
+  addCardFormValidator.disableButton();
 };
 
 function closePopupAddElement() {

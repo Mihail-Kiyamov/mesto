@@ -1,8 +1,8 @@
-const showImageName = document.querySelector('.popup_type_show-image').querySelector('.popup__image-name');
-const showImage = document.querySelector('.popup_type_show-image').querySelector('.popup__image');
-
 import {popupShowImage} from './utils/constants.js';
 import {openPopup} from './utils/utils.js';
+
+const showImageName = popupShowImage.querySelector('.popup__image-name');
+const showImage = popupShowImage.querySelector('.popup__image');
 
 export class Card {
   constructor(name, src, templateSelector) {
