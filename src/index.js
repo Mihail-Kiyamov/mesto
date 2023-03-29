@@ -11,10 +11,6 @@ import PopupWithImage from '../Jscripts/PopupWithImage.js';
 import PopupWithForm from '../Jscripts/PopupWithForm.js';
 import UserInfo from '../Jscripts/UserInfo.js';
 
-const Images = [
-  { name: 'Michael Jordan', image: jordanImage },
-]; 
-
 const newName = document.querySelector('.popup__input_type_name');
 const newAbout = document.querySelector('.popup__input_type_about');
 const profileEditButton = document.querySelector('.profile__edit-button');
