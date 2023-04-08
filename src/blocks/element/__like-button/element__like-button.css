@@ -7,7 +7,7 @@
     border: none;
     box-sizing: border-box;
     cursor: pointer;
-    background: url(../../../images/Like.svg);
+    background: url(../../../../images/Like.svg);
 }
 
 .element__like-button:hover {

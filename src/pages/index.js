@@ -1,12 +1,15 @@
+
+
 import './pages/index.css';
 
-import {config, initialCards} from './Jscripts/constants.js';
-import {FormValidator} from './Jscripts/components/FormValidator.js';
-import Card from './Jscripts/components/Card';
-import {Section} from './Jscripts/components/Section.js';
-import PopupWithImage from './Jscripts/components/PopupWithImage.js';
-import PopupWithForm from './Jscripts/components/PopupWithForm.js';
-import UserInfo from './Jscripts/components/UserInfo.js';
+import {config} from '../Jscripts/constants.js';
+import {FormValidator} from '../Jscripts/FormValidator.js';
+import Card from '../Jscripts/components/Card.js';
+import {initialCards} from '../Jscripts/constants.js';
+import {Section} from '../Jscripts/Section.js';
+import PopupWithImage from '../Jscripts/PopupWithImage.js';
+import PopupWithForm from '../Jscripts/PopupWithForm.js';
+import UserInfo from '../Jscripts/UserInfo.js';
 
 const newName = document.querySelector('.popup__input_type_name');
 const newAbout = document.querySelector('.popup__input_type_about');
@@ -19,27 +22,29 @@ const popupAddElemetSubmitForm = document.querySelector('.popup__submit-form_typ
 const profile = new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about'});
 
 const cardContainer = new Section({items: initialCards, renderer: item => {
-  const newCard = new Card(item.name, item.link, '#element-template', (src, name) => {
-    popupShowImage.open(src, name);
-  });
-  
-  const cardElement = newCard.generateCard();
+  const newCard = generateCardElement(item.name, item.link);
 
-  cardContainer.addItem(cardElement);
+  cardContainer.addItem(newCard);
 } }, '.elements')
+
+function generateCardElement(name, src) {
+  const cardElement = new Card(name, src, '#element-template', (name, src) => {
+    popupShowImage.open(src, name);
+  }).generateCard();
+
+  return cardElement;
+}
 
 const popupShowImage = new PopupWithImage('.popup_type_show-image');
 popupShowImage.setEventListeners();
 
-const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', (Inputs) => {
-  profile.setUserInfo(Inputs.name,  Inputs.about);
+const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', (inputs) => {
+  profile.setUserInfo(inputs.name,  inputs.about);
 });
 popupEditProfile.setEventListeners();
 
-const popupAddCard = new PopupWithForm('.popup_type_add-element', (Inputs) => {
-  const cardElement = new Card(Inputs.mestoName, Inputs.mestoSrc, '#element-template', (Inputs) => {
-    popupShowImage.open(Inputs.mestoSrc, Inputs.mestoName);
-  }).generateCard();
+const popupAddCard = new PopupWithForm('.popup_type_add-element', (inputs) => {
+  const cardElement = generateCardElement(inputs.mestoName, inputs.mestoSrc);
 
   cardContainer.addItem(cardElement);
 });
@@ -49,8 +54,9 @@ popupAddCard.setEventListeners();
 //Открытие попапа Изменение Данных Профиля
 function openPopupProfileEdit() {
   popupEditProfile.open();
-  newName.value = profile.getUserInfo().name;
-  newAbout.value = profile.getUserInfo().about;
+  const userInfo = profile.getUserInfo();
+  newName.value = userInfo.name;
+  newAbout.value = userInfo.about;
 
   profileEditFormValidator.resetErrors();
   profileEditFormValidator.enableButton();
