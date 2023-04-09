@@ -7,8 +7,6 @@ export class FormValidator {
   }
 
   enableValidation() {
-    const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-    const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {

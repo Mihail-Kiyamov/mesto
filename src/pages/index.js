@@ -1,15 +1,12 @@
+import '../pages/index.css';
 
-
-import './pages/index.css';
-
-import {config} from '../Jscripts/constants.js';
-import {FormValidator} from '../Jscripts/FormValidator.js';
-import Card from '../Jscripts/components/Card.js';
-import {initialCards} from '../Jscripts/constants.js';
-import {Section} from '../Jscripts/Section.js';
-import PopupWithImage from '../Jscripts/PopupWithImage.js';
-import PopupWithForm from '../Jscripts/PopupWithForm.js';
-import UserInfo from '../Jscripts/UserInfo.js';
+import {config, initialCards} from '../Jscripts/constants.js';
+import {FormValidator} from '../Jscripts/components/FormValidator.js';
+import Card from '../Jscripts/components/Card';
+import {Section} from '../Jscripts/components/Section.js';
+import PopupWithImage from '../Jscripts/components/PopupWithImage.js';
+import PopupWithForm from '../Jscripts/components/PopupWithForm.js';
+import UserInfo from '../Jscripts/components/UserInfo.js';
 
 const newName = document.querySelector('.popup__input_type_name');
 const newAbout = document.querySelector('.popup__input_type_about');
@@ -28,7 +25,7 @@ const cardContainer = new Section({items: initialCards, renderer: item => {
 } }, '.elements')
 
 function generateCardElement(name, src) {
-  const cardElement = new Card(name, src, '#element-template', (name, src) => {
+  const cardElement = new Card(name, src, '#element-template', (src, name) => {
     popupShowImage.open(src, name);
   }).generateCard();
 
