@@ -36,7 +36,7 @@
                 <img class="element__image"
                     src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз">
                 <h2 class="element__name"></h2>
-                <button class="element__like-button" type="button"></button>
+                <button class="element__like-button" type="button"><p class="element__like-button-counter">0</p></button>
                 <button class="element__delete-button" type="button"></button>
             </article>
         </template>
@@ -85,6 +85,13 @@
                 src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg" alt="Архыз">
             <p class="popup__image-name"></p>
             <button class="popup__close popup__close_type_show-image" type="button"></button>
+        </div>
+    </div >
+    <div class="popup popup_type_warning">
+        <div class="popup__container">
+            <h2 class="popup__title">Вы уверены?</h2>
+            <input class="popup__submit" type="button" value="Да">
+            <button class="popup__close popup__close_type_add-element" type="button"></button>
         </div>
     </div>
 </body>

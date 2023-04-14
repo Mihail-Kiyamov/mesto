@@ -6,6 +6,7 @@
     align-self: center;
     border: none;
     box-sizing: border-box;
+    position: relative;
     cursor: pointer;
     background: url(../../../../images/Like.svg);
 }

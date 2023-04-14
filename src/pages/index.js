@@ -1,12 +1,14 @@
 import '../pages/index.css';
 
-import {config, initialCards} from '../Jscripts/constants.js';
+import {config} from '../Jscripts/constants.js';
 import {FormValidator} from '../Jscripts/components/FormValidator.js';
 import Card from '../Jscripts/components/Card';
 import {Section} from '../Jscripts/components/Section.js';
 import PopupWithImage from '../Jscripts/components/PopupWithImage.js';
 import PopupWithForm from '../Jscripts/components/PopupWithForm.js';
 import UserInfo from '../Jscripts/components/UserInfo.js';
+import Api from '../Jscripts/components/Api.js';
+import PopupWarning from '../Jscripts/components/PopupWarning';
 
 const newName = document.querySelector('.popup__input_type_name');
 const newAbout = document.querySelector('.popup__input_type_about');
@@ -18,16 +20,54 @@ const popupAddElemetSubmitForm = document.querySelector('.popup__submit-form_typ
 
 const profile = new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about'});
 
-const cardContainer = new Section({items: initialCards, renderer: item => {
-  const newCard = generateCardElement(item.name, item.link);
+const api = new Api('65395c33-5b1a-4f62-9796-f7da5822a9af');
+
+api.getProfileInfo()
+  .then((result) => {
+    profile.setUserInfo(result.name, result.about, result._id);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+const cardContainer = new Section({renderer: item => {
+  const newCard = generateCardElement(item.name, item.link, item._id, item.likes.length, item.owner._id);
 
   cardContainer.addItem(newCard);
 } }, '.elements')
 
-function generateCardElement(name, src) {
-  const cardElement = new Card(name, src, '#element-template', (src, name) => {
+api.getInitialCards()
+.then((result) => {
+  cardContainer.renderItems(result)
+})
+.catch((err) => console.log(err))
+
+function generateCardElement(name, src, id, likeCounter, ownerId) {
+  const cardElement = new Card(name, src, id, likeCounter, '#element-template', (src, name) => {
     popupShowImage.open(src, name);
-  }).generateCard();
+  }, (card) => {
+    popupWarning.setConfirmHandle(() => {
+      api.deleteCard(card._id)
+      .then(() => {
+        card.deleteElement();
+        popupWarning.close();
+      })
+      .catch((err) => console.log(err))
+    });
+    popupWarning.open()
+  }, (card) => {
+    api.putLike(card._id)
+    .then((result) => {
+      card.setLikeValue(result.likes.length);
+    })
+    .catch((err) => console.log(err))
+  }, (card)  => {
+    api.deleteLike(card._id)
+    .then((result) => {
+      card.setLikeValue(result.likes.length);
+    })
+    .catch((err) => console.log(err))
+  }).generateCard(profile.getUserInfo().id == ownerId);
 
   return cardElement;
 }
@@ -36,17 +76,25 @@ const popupShowImage = new PopupWithImage('.popup_type_show-image');
 popupShowImage.setEventListeners();
 
 const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', (inputs) => {
-  profile.setUserInfo(inputs.name,  inputs.about);
-});
+  api.changeProfile(inputs)
+  .then((result) => {
+    profile.setUserInfo(result.name,  result.about)
+  })
+  .catch((err) => console.log(err))
+})
 popupEditProfile.setEventListeners();
 
 const popupAddCard = new PopupWithForm('.popup_type_add-element', (inputs) => {
-  const cardElement = generateCardElement(inputs.mestoName, inputs.mestoSrc);
-
-  cardContainer.addItem(cardElement);
+  api.addNewCard(inputs)
+  .then(result => {
+    cardContainer.addItemPrepend(generateCardElement(result.name, result.link, result._id, result.likes.length, profile.getUserInfo().id))
+  })
+  .catch((err) => console.log(err));
 });
 popupAddCard.setEventListeners();
 
+const popupWarning = new PopupWarning('.popup_type_warning');
+popupWarning.setEventListeners();
 
 //Открытие попапа Изменение Данных Профиля
 function openPopupProfileEdit() {
@@ -66,8 +114,6 @@ function openPopupAddElement() {
   addCardFormValidator.resetErrors();
   addCardFormValidator.disableButton();
 };
-
-cardContainer.renderItems();
 
 //Создание валидации
 const profileEditFormValidator = new FormValidator(config, popupEditProfileSubmitForm);
