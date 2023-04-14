@@ -5,7 +5,7 @@
 .header{border-bottom:1px solid rgba(84,84,84,.7);box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;padding-bottom:40px;width:100%}@media screen and (max-width:640px){.header{padding-bottom:31px}}
 .header__logo{height:33px;width:142px}@media screen and (max-width:640px){.header__logo{height:24px;margin-left:27px;width:104px}}
 .profile{align-items:center;color:#fff;display:flex;flex-direction:row;margin-top:40px;width:100%}@media screen and (max-width:640px){.profile{box-sizing:border-box;flex-direction:column;margin-top:42px;padding-left:19px;padding-right:19px}}
-.profile__circle-for-image{border-radius:50%;height:120px;margin-right:30px;overflow:hidden;width:120px}@media screen and (max-width:640px){.profile__circle-for-image{margin-bottom:26px;margin-right:0}}
+.profile__circle-for-image{border:none;border-radius:50%;height:120px;margin-right:30px;overflow:hidden;position:relative;width:120px}.profile__circle-for-image:before{background:url(a086f758840ae814ecde.svg) no-repeat 50%;z-index:1}.profile__circle-for-image:after,.profile__circle-for-image:before{bottom:0;content:"";display:none;left:0;position:absolute;right:0;top:0}.profile__circle-for-image:after{background:rgba(0,0,0,.8)}.profile__circle-for-image:hover:after,.profile__circle-for-image:hover:before{cursor:pointer;display:block}@media screen and (max-width:640px){.profile__circle-for-image{margin-bottom:26px;margin-right:0}}
 .profile__avatar{height:100%;-o-object-fit:cover;object-fit:cover;width:100%}
 .profile__info{display:flex;flex-direction:row;flex-wrap:wrap;max-width:calc(100% - 350px)}@media screen and (max-width:640px){.profile__info{justify-content:center;margin-bottom:33px;max-width:none;width:100%}}
 .profile__name{font-size:42px;font-weight:500;line-height:48px;margin:0;max-width:calc(100% - 50px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media screen and (max-width:640px){.profile__name{font-size:27px;line-height:33px;max-width:calc(100% - 30px)}}
@@ -16,8 +16,9 @@
 .element{background-color:#fff;border-radius:10px;display:flex;flex-direction:row;flex-wrap:wrap;overflow:hidden;position:relative;width:282px}
 .element__image{background-color:#000;color:#fff;cursor:pointer;height:282px;-o-object-fit:cover;object-fit:cover;width:100%}
 .element__name{font-size:24px;font-weight:900;line-height:29px;margin:25px 0 25px 20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:210px}
-.element__like-button{align-self:center;background:url(87ed371465c7a6a1cd01.svg);border:none;box-sizing:border-box;cursor:pointer;height:19px;margin-left:auto;margin-right:20px;width:22px}.element__like-button:hover{opacity:.5}
+.element__like-button{align-self:center;background:url(87ed371465c7a6a1cd01.svg);border:none;box-sizing:border-box;cursor:pointer;height:19px;margin-left:auto;margin-right:20px;position:relative;width:22px}.element__like-button:hover{opacity:.5}
 .element__like-button_active{background:url(fe17a515669479b1e649.svg)}
+.element__like-button-counter{bottom:-30px;font-size:13px;font-weight:400;left:7px;line-height:16px;position:absolute}
 .element__delete-button{background:url(823b0cf1b0b7e9cb7cad.svg);border:none;box-sizing:border-box;cursor:pointer;height:19px;position:absolute;right:20px;top:20px;width:18px}
 .footer{margin-top:66px}@media screen and (max-width:640px){.footer{margin-left:19px;margin-right:19px;margin-top:48px}}
 .footer__author{color:#545454;font-size:18px;font-weight:400;line-height:22px;margin:0}@media screen and (max-width:640px){.footer__author{font-size:14px;line-height:17px}}
