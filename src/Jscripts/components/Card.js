@@ -1,5 +1,3 @@
-import { CleanPlugin } from "webpack";
-
 export default class Card {
   constructor(name, src, id, likeCounter, templateSelector, handleCardClick, handleDelete, handleLikeActive, handleLikeDisable) {
     this._name = name;
