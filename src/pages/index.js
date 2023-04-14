@@ -18,38 +18,34 @@ const changeAvatarButton = document.querySelector('.profile__circle-for-image');
 const popupEditProfileSubmitForm = document.querySelector('.popup__submit-form_type_edit-profile');
 const popupAddElemetSubmitForm = document.querySelector('.popup__submit-form_type_add-element');
 const popupChangeAvatarSubmitForm = document.querySelector('.popup_type_change-avatar');
-const popupEditProfileSubmitButton = popupEditProfileSubmitForm.querySelector('.popup__submit');
-const popupAddElementSubmitButton = popupAddElemetSubmitForm.querySelector('.popup__submit');
-const popupChangeAvatarSubmitButton = popupChangeAvatarSubmitForm.querySelector('.popup__submit');
 const profileAvatar = document.querySelector('.profile__avatar');
 
-const profile = new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about'});
+const profile = new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about', avatarSelector: '.profile__avatar'});
 
-const api = new Api('65395c33-5b1a-4f62-9796-f7da5822a9af');
+const api = new Api('https://nomoreparties.co/v1/cohort-63', {
+  authorization: '65395c33-5b1a-4f62-9796-f7da5822a9af',
+  'Content-Type': 'application/json'
+});
 
-api.getProfileInfo()
-  .then((result) => {
-    profile.setUserInfo(result.name, result.about, result._id);
-    profileAvatar.src = result.avatar;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+Promise.all([api.getProfileInfo(), api.getInitialCards()])
+.then(([userData, cards]) => {
+  profile.setUserInfo(userData.name, userData.about, userData._id, userData.avatar);
+  cardContainer.renderItems(cards);
+})
+.catch((err) => {
+  console.log(err);
+});
 
 const cardContainer = new Section({renderer: item => {
-  const newCard = generateCardElement(item.name, item.link, item._id, item.likes.length, item.owner._id);
+  const newCard = generateCardElement(item.name, item.link, item._id, item.likes.length, item.likes.some(obj => obj._id === profile._id), item.owner._id);
 
   cardContainer.addItem(newCard);
 } }, '.elements')
 
-api.getInitialCards()
-.then((result) => {
-  cardContainer.renderItems(result)
-})
-.catch((err) => console.log(err))
 
-function generateCardElement(name, src, id, likeCounter, ownerId) {
-  const cardElement = new Card(name, src, id, likeCounter, '#element-template', (src, name) => {
+
+function generateCardElement(name, src, id, likeCounter, isLiked, ownerId) {
+  const cardElement = new Card(name, src, id, likeCounter, isLiked, '#element-template', (src, name) => {
     popupShowImage.open(src, name);
   }, (card) => {
     popupWarning.setConfirmHandle(() => {
@@ -65,12 +61,14 @@ function generateCardElement(name, src, id, likeCounter, ownerId) {
     api.putLike(card._id)
     .then((result) => {
       card.setLikeValue(result.likes.length);
+      card._likeButton.classList.toggle('element__like-button_active')
     })
     .catch((err) => console.log(err))
   }, (card)  => {
     api.deleteLike(card._id)
     .then((result) => {
       card.setLikeValue(result.likes.length);
+      card._likeButton.classList.toggle('element__like-button_active')
     })
     .catch((err) => console.log(err))
   }).generateCard(profile.getUserInfo().id == ownerId);
@@ -82,35 +80,29 @@ const popupShowImage = new PopupWithImage('.popup_type_show-image');
 popupShowImage.setEventListeners();
 
 const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', (inputs) => {
-  popupEditProfileSubmitButton.value = 'Сохранение...';
-  api.changeProfile(inputs)
+  return api.changeProfile(inputs)
   .then((result) => {
-    profile.setUserInfo(result.name,  result.about)
+    profile.setUserInfo(result.name, result.about, result._id, result.avatar)
   })
   .catch((err) => console.log(err));
-  popupEditProfileSubmitButton.value = 'Сохранить';
 })
 popupEditProfile.setEventListeners();
 
 const popupAddCard = new PopupWithForm('.popup_type_add-element', (inputs) => {
-  popupAddElementSubmitButton.value = 'Создание...';
-  api.addNewCard(inputs)
+  return api.addNewCard(inputs)
   .then(result => {
     cardContainer.addItemPrepend(generateCardElement(result.name, result.link, result._id, result.likes.length, profile.getUserInfo().id))
   })
   .catch((err) => console.log(err));
-  popupAddElementSubmitButton.value = 'Создать';
 });
 popupAddCard.setEventListeners();
 
 const popupChangeAvatar = new PopupWithForm('.popup_type_change-avatar', (values) => {
-  popupChangeAvatarSubmitButton.value = 'Сохранение...';
-  api.changeAvatar(values.avatarSrc)
+  return api.changeAvatar(values.avatarSrc)
   .then(() => {
-    profileAvatar.src = values.avatarSrc;
+    profile.changeAvatar(values.avatarSrc)
   })
   .catch((err) => console.log(err));
-  popupChangeAvatarSubmitButton.value = 'Сохраненить';
 });
 popupChangeAvatar.setEventListeners();
 
