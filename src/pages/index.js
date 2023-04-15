@@ -91,7 +91,7 @@ popupEditProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_type_add-element', (inputs) => {
   return api.addNewCard(inputs)
   .then(result => {
-    cardContainer.addItemPrepend(generateCardElement(result.name, result.link, result._id, result.likes.length, profile.getUserInfo().id))
+    cardContainer.addItemPrepend(generateCardElement(result.name, result.link, result._id, result.likes.length, result.likes.some(obj => obj._id === profile._id), profile.getUserInfo().id))
   })
   .catch((err) => console.log(err));
 });
